@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yeah! Feria — Figma Import</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* Reset */
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Syne',sans-serif;background:#FAF6EE;color:#1A1209;}
+
+/* ── FRAME WRAPPER — each section = 1440px wide frame ── */
+.frame{
+  width:1440px;
+  margin:0 auto;
+  position:relative;
+  overflow:hidden;
+}
+.frame-label{
+  font-family:'Space Mono',monospace;
+  font-size:11px;color:#A12D50;
+  letter-spacing:0.15em;text-transform:uppercase;
+  padding:12px 24px;background:#FAF6EE;
+  border-bottom:2px solid #A12D50;
+}
+
+/* ── ANNOUNCE BAR ── */
+.announce{
+  width:100%;height:34px;
+  background:#A12D50;
+  display:flex;align-items:center;justify-content:center;
+}
+.announce-text{
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:400;
+  color:rgba(255,255,255,0.9);letter-spacing:0.04em;
+}
+.announce-text strong{color:#F9D498;}
+
+/* ── NAV ── */
+.nav{
+  width:100%;height:68px;
+  background:#1A1209;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 35px;
+}
+.nav-logo{
+  font-family:'Syne',sans-serif;font-size:18px;font-weight:400;
+  color:#F9D498;
+}
+.nav-logo strong{color:#F2B03E;font-weight:500;}
+.nav-burger{display:flex;flex-direction:column;gap:7px;cursor:pointer;}
+.nav-burger span{display:block;width:28px;height:1.5px;background:#F9D498;}
+.nav-burger span:last-child{width:18px;}
+
+/* ── HERO ── */
+.hero{
+  width:100%;height:860px;
+  background:#2A1A0A;
+  background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80');
+  background-size:cover;background-position:center;
+  position:relative;display:flex;align-items:flex-end;
+}
+.hero::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(26,18,9,0.88) 0%,rgba(26,18,9,0.15) 55%,transparent 100%);
+}
+.hero-content{position:relative;z-index:2;padding:0 35px 80px;}
+.hero-eyebrow{
+  font-family:'Syne',sans-serif;font-size:15px;font-weight:400;
+  color:#F2B03E;letter-spacing:0.04em;margin-bottom:20px;
+}
+.hero-title{
+  font-family:'Syne',sans-serif;
+  font-size:136px;font-weight:300;line-height:0.9;
+  color:#ffffff;margin-bottom:28px;letter-spacing:-0.04em;
+}
+.hero-title em{font-style:normal;color:#F2B03E;}
+.hero-sub{
+  font-size:20px;font-weight:400;color:rgba(255,255,255,0.68);
+  max-width:460px;line-height:1.72;margin-bottom:40px;
+}
+.hero-dots{position:absolute;bottom:44px;right:35px;display:flex;gap:10px;z-index:3;}
+.hero-dot{width:30px;height:2px;background:rgba(255,255,255,0.2);}
+.hero-dot.active{background:#F2B03E;}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;
+  font-family:'Syne',sans-serif;font-size:16px;font-weight:400;
+  border-radius:2px;border:none;cursor:pointer;
+}
+.btn-dark{background:#1A1209;color:#F9D498;}
+.btn-ghost{background:transparent;color:#1A1209;border:1.5px solid #1A1209;}
+.btn-ghost-light{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,0.5);}
+.btn-ghost-inv{background:transparent;color:#1A1209;border:1.5px solid #1A1209;}
+.btn-gal{background:#ffffff;color:#1A1209;border:none;}
+
+/* ── MARQUEE ── */
+.marquee{
+  width:100%;height:44px;background:#EA5546;
+  display:flex;align-items:center;overflow:hidden;
+}
+.mq-text{
+  font-family:'Space Mono',monospace;font-size:11px;color:#fff;
+  letter-spacing:0.14em;white-space:nowrap;
+  padding:0 40px;
+}
+.mq-dot{color:#F2B03E;padding:0 10px;}
+
+/* ── STATS ── */
+.stats{width:100%;background:#1A1209;display:grid;grid-template-columns:repeat(3,1fr);}
+.stat{padding:56px;text-align:center;border-right:1px solid rgba(249,212,152,0.08);}
+.stat:last-child{border-right:none;}
+.stat-n{font-family:'Syne',sans-serif;font-size:88px;font-weight:300;color:#F2B03E;letter-spacing:-0.04em;line-height:1;}
+.stat-l{font-family:'Space Mono',monospace;font-size:10px;color:rgba(249,212,152,0.4);letter-spacing:0.16em;margin-top:12px;}
+
+/* ── LABEL ── */
+.label{font-family:'Syne',sans-serif;font-size:15px;font-weight:400;letter-spacing:0.04em;margin-bottom:18px;display:block;}
+.label-red{color:#EA5546;}
+.label-sunset{color:#F2B03E;}
+.label-mid{color:rgba(26,18,9,0.45);}
+.label-white{color:rgba(255,255,255,0.55);}
+
+/* ── HOME CATS ── */
+.home-cats{width:100%;background:#1A1209;padding:104px 35px;}
+.sec-title{font-family:'Syne',sans-serif;font-size:72px;font-weight:300;letter-spacing:-0.04em;line-height:1;}
+.sec-title-light{color:#F9D498;}
+.sec-title-dark{color:#1A1209;}
+.sec-sub{font-size:20px;font-weight:400;line-height:1.75;margin-top:14px;margin-bottom:48px;}
+.sec-sub-light{color:rgba(249,212,152,0.45);}
+.sec-sub-dark{color:#6B5740;}
+.cats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+.cat-chip{
+  padding:13px 16px;
+  border:1px solid rgba(249,212,152,0.14);
+  font-family:'Syne',sans-serif;font-size:14px;font-weight:400;
+  color:rgba(249,212,152,0.65);
+  background:rgba(249,212,152,0.04);border-radius:2px;text-align:center;
+}
+
+/* ── FEATURED ── */
+.featured{width:100%;background:#F2B03E;padding:104px 35px;}
+.featured-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.bfc{background:#ffffff;border-radius:2px;overflow:hidden;}
+.bfc-img{height:260px;position:relative;overflow:hidden;}
+.bfc-color{position:absolute;inset:0;}
+.bfc-badge{
+  position:absolute;top:10px;left:10px;
+  font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.06em;
+  padding:4px 10px;border-radius:2px;z-index:3;
+}
+.badge-off{background:#EA5546;color:#fff;}
+.badge-ship{background:#A12D50;color:#fff;}
+.bfc-body{padding:18px 18px 22px;}
+.bfc-cat{font-family:'Space Mono',monospace;font-size:9px;color:#EA5546;letter-spacing:0.14em;margin-bottom:6px;}
+.bfc-name{font-size:18px;font-weight:400;color:#1A1209;margin-bottom:6px;}
+.bfc-desc{font-size:14px;font-weight:400;color:#6B5740;line-height:1.6;margin-bottom:16px;}
+.bfc-links{display:flex;gap:12px;}
+.bfc-link{font-family:'Syne',sans-serif;font-size:14px;font-weight:400;color:#1A1209;text-decoration:none;border-bottom:1px solid #1A1209;padding-bottom:1px;}
+
+/* ── ABOUT ── */
+.about-strip{width:100%;display:grid;grid-template-columns:1fr 1fr;}
+.about-left{padding:104px 64px 104px 35px;background:#ffffff;border-right:1px solid rgba(26,18,9,0.1);}
+.about-title{font-size:72px;font-weight:300;color:#1A1209;letter-spacing:-0.04em;line-height:1;margin-bottom:24px;}
+.about-body{font-size:20px;font-weight:400;color:#6B5740;line-height:1.82;max-width:420px;margin-bottom:40px;}
+.lnk{font-family:'Syne',sans-serif;font-size:15px;font-weight:400;color:#1A1209;text-decoration:none;border-bottom:1px solid #1A1209;padding-bottom:1px;}
+.about-right{padding:104px 35px 104px 64px;background:#1A1209;}
+.pill{padding:28px 0;border-bottom:1px solid rgba(249,212,152,0.1);}
+.pill:last-child{border-bottom:none;}
+.pill-label{font-family:'Syne',sans-serif;font-size:15px;font-weight:400;color:#F2B03E;letter-spacing:0.03em;margin-bottom:8px;}
+.pill-text{font-size:17px;font-weight:400;color:rgba(249,212,152,0.65);line-height:1.68;}
+
+/* ── HOME EVENTOS ── */
+.home-eventos{width:100%;background:#EA5546;padding:104px 35px;}
+.ev-item{display:flex;align-items:center;gap:40px;padding:28px 0;border-bottom:1px solid rgba(255,255,255,0.18);}
+.ev-item:first-of-type{border-top:1px solid rgba(255,255,255,0.18);}
+.ev-date{font-size:44px;font-weight:300;color:#ffffff;letter-spacing:-0.04em;line-height:1;min-width:90px;}
+.ev-date small{display:block;font-family:'Space Mono',monospace;font-size:9px;font-weight:400;color:rgba(255,255,255,0.5);letter-spacing:0.14em;}
+.ev-name{font-size:18px;font-weight:400;color:#ffffff;}
+.ev-place{font-size:15px;font-weight:400;color:rgba(255,255,255,0.58);margin-top:4px;}
+.ev-tag{margin-left:auto;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.1em;padding:5px 12px;border-radius:2px;white-space:nowrap;}
+.ev-tag.prox{background:rgba(255,255,255,0.14);color:#ffffff;}
+.ev-tag.pas{background:rgba(0,0,0,0.18);color:rgba(255,255,255,0.45);}
+
+/* ── GALLERY HOME ── */
+.gal-home{
+  width:100%;height:520px;
+  position:relative;overflow:hidden;
+  display:grid;grid-template-columns:repeat(4,1fr);
+}
+.gal-panel{position:relative;overflow:hidden;border-right:3px solid rgba(250,246,238,0.12);}
+.gal-panel:last-child{border-right:none;}
+.gal-panel-bg{position:absolute;inset:0;background-size:cover;background-position:center;}
+.gal-panel::after{content:'';position:absolute;inset:0;background:rgba(26,18,9,0.32);}
+.gal-cta-overlay{
+  position:absolute;inset:0;z-index:20;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(26,18,9,0.18);
+}
+
+/* ── TIENDA HEADER ── */
+.tienda-header{width:100%;background:#1A1209;padding:104px 35px 48px;}
+
+/* ── FILTER BAR ── */
+.filter-bar{
+  width:100%;padding:22px 35px;
+  border-bottom:1px solid rgba(26,18,9,0.1);
+  display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+  background:#ffffff;
+}
+.fb-label{font-family:'Syne',sans-serif;font-size:13px;font-weight:400;color:#6B5740;letter-spacing:0.04em;margin-right:8px;}
+.fb-btn{
+  padding:6px 15px;border:1px solid rgba(26,18,9,0.1);
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:400;color:#1A1209;
+  background:#ffffff;border-radius:20px;
+}
+.fb-btn.active{background:#1A1209;color:#F9D498;border-color:#1A1209;}
+
+/* ── BRANDS GRID ── */
+.brands-g{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:56px 35px;background:#FAF6EE;}
+.bc{background:#ffffff;border:1px solid rgba(26,18,9,0.1);border-radius:2px;overflow:hidden;}
+.bc-img{aspect-ratio:1/1;position:relative;overflow:hidden;}
+.bc-color{position:absolute;inset:0;}
+.bc-body{padding:18px;}
+.bc-cat{font-family:'Space Mono',monospace;font-size:9px;color:#EA5546;letter-spacing:0.14em;margin-bottom:6px;}
+.bc-name{font-size:17px;font-weight:400;color:#1A1209;margin-bottom:5px;}
+.bc-desc{font-size:14px;font-weight:400;color:#6B5740;line-height:1.6;margin-bottom:14px;}
+.bc-links{display:flex;gap:12px;}
+.bc-link{font-family:'Syne',sans-serif;font-size:14px;font-weight:400;color:#1A1209;text-decoration:none;border-bottom:1px solid #1A1209;padding-bottom:1px;}
+
+/* ── SOBRE ── */
+.sobre-hero{width:100%;background:#F2B03E;padding:128px 35px 88px;}
+.sobre-title{font-size:120px;font-weight:300;color:#1A1209;letter-spacing:-0.05em;line-height:0.88;margin-bottom:24px;}
+.sobre-title em{font-style:normal;color:#A12D50;}
+.sobre-lead{font-size:21px;font-weight:400;color:rgba(26,18,9,0.65);max-width:580px;line-height:1.78;}
+.sobre-body{width:100%;display:grid;grid-template-columns:2fr 1fr;}
+.sobre-main{padding:80px 64px 80px 35px;border-right:1px solid rgba(26,18,9,0.1);background:#ffffff;}
+.sobre-main p{font-size:18px;font-weight:400;color:#6B5740;line-height:1.88;margin-bottom:24px;}
+.sobre-side{padding:80px 35px 80px 64px;background:#1A1209;}
+.sv{margin-bottom:44px;}
+.sv-title{font-size:18px;font-weight:400;color:#F9D498;margin-bottom:8px;}
+.sv-text{font-size:15px;font-weight:400;color:rgba(249,212,152,0.55);line-height:1.68;}
+.manifesto{width:100%;padding:104px 35px;text-align:center;background:#A12D50;}
+.manifesto q{font-family:'Syne',sans-serif;font-size:52px;font-weight:300;color:#F9D498;line-height:1.12;letter-spacing:-0.02em;}
+
+/* ── GALERÍA PAGE ── */
+.gal-header{width:100%;background:#1A1209;padding:104px 35px 48px;}
+.gal-filters{width:100%;padding:22px 35px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:#ffffff;border-bottom:1px solid rgba(26,18,9,0.1);}
+.gal-mosaic{width:100%;display:grid;grid-template-columns:repeat(3,1fr);}
+.gal-item{aspect-ratio:1/1;position:relative;overflow:hidden;}
+.gal-bg{position:absolute;inset:0;background-size:cover;background-position:center;}
+.gal-info{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(26,18,9,0.85));padding:40px 22px 22px;}
+.gal-cat{font-family:'Space Mono',monospace;font-size:9px;color:#F9D498;letter-spacing:0.16em;}
+.gal-title-item{font-size:16px;font-weight:400;color:#ffffff;margin-top:5px;}
+
+/* ── EVENTOS PAGE ── */
+.ev-header{width:100%;background:#F2B03E;padding:104px 35px 64px;}
+.ev-h1{font-size:96px;font-weight:300;color:#1A1209;letter-spacing:-0.04em;line-height:0.9;}
+.ev-h1 em{font-style:normal;color:#A12D50;}
+.ev-rows{padding:0 35px;background:#ffffff;}
+.ev-row{display:grid;grid-template-columns:140px 1fr auto;align-items:center;gap:40px;padding:35px 0;border-bottom:1px solid rgba(26,18,9,0.1);}
+.ev-row:first-child{border-top:1px solid rgba(26,18,9,0.1);}
+.ev-row-date{font-size:56px;font-weight:300;color:#1A1209;letter-spacing:-0.04em;line-height:1;}
+.ev-row-date small{display:block;font-family:'Space Mono',monospace;font-size:9px;font-weight:400;color:#6B5740;letter-spacing:0.14em;}
+.ev-row-title{font-size:20px;font-weight:400;color:#1A1209;margin-bottom:5px;}
+.ev-row-place{font-size:15px;font-weight:400;color:#6B5740;}
+.ev-row-tag{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.1em;padding:5px 12px;border-radius:2px;white-space:nowrap;}
+.ev-row-tag.prox{background:rgba(234,85,70,0.1);color:#EA5546;}
+.ev-row-tag.pas{background:rgba(26,18,9,0.06);color:#6B5740;}
+.mapa-sec{width:100%;padding:72px 35px;background:#1A1209;}
+.mapa-sec h2{font-size:36px;font-weight:300;color:#F9D498;letter-spacing:-0.02em;margin-bottom:8px;}
+.mapa-ph{background:#221508;border:1px dashed rgba(242,176,62,0.15);border-radius:2px;height:220px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;margin-top:24px;}
+.mapa-ph span{font-family:'Space Mono',monospace;font-size:10px;color:rgba(249,212,152,0.3);letter-spacing:0.18em;}
+.ev-cta{width:100%;padding:72px 35px;display:flex;align-items:center;justify-content:space-between;gap:32px;background:#EA5546;}
+.ev-cta h3{font-size:36px;font-weight:300;color:#ffffff;letter-spacing:-0.02em;}
+.ev-cta p{font-size:15px;font-weight:400;color:rgba(255,255,255,0.65);margin-top:6px;}
+
+/* ── MENU OVERLAY ── */
+.menu-overlay-frame{width:100%;min-height:860px;background:#1A1209;position:relative;display:flex;flex-direction:column;}
+.menu-overlay-top{display:flex;align-items:center;justify-content:space-between;padding:calc(34px + 22px) 35px 0;}
+.menu-overlay-logo{font-family:'Syne',sans-serif;font-size:18px;font-weight:400;color:rgba(249,212,152,0.5);}
+.menu-overlay-logo strong{color:rgba(242,176,62,0.6);font-weight:500;}
+.menu-overlay-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 35px 24px 96px;}
+.menu-item{
+  font-family:'Syne',sans-serif;
+  font-size:88px;font-weight:300;
+  color:rgba(249,212,152,0.22);
+  letter-spacing:-0.03em;line-height:1.08;
+  padding:8px 0;
+  display:flex;align-items:baseline;gap:20px;
+}
+.menu-item.hover{color:#F9D498;}
+.menu-num{font-family:'Space Mono',monospace;font-size:10px;color:rgba(249,212,152,0.2);letter-spacing:0.1em;align-self:flex-end;margin-bottom:12px;}
+.menu-footer{display:flex;gap:32px;padding:24px 35px 32px 96px;border-top:1px solid rgba(249,212,152,0.06);}
+.menu-footer a{font-family:'Syne',sans-serif;font-size:14px;font-weight:400;color:rgba(249,212,152,0.35);text-decoration:none;}
+
+/* ── FOOTER ── */
+.footer{width:100%;background:#1A1209;padding:64px 35px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(249,212,152,0.06);}
+.footer-logo{font-family:'Syne',sans-serif;font-size:19px;font-weight:400;color:#F9D498;}
+.footer-logo strong{color:#F2B03E;font-weight:500;}
+.footer-links{display:flex;gap:40px;}
+.footer-links a{font-family:'Syne',sans-serif;font-size:14px;font-weight:400;color:rgba(249,212,152,0.4);text-decoration:none;border-bottom:1px solid transparent;}
+.footer-copy{font-family:'Space Mono',monospace;font-size:9px;color:rgba(249,212,152,0.18);letter-spacing:0.12em;}
+
+/* ── DIVIDER between frames ── */
+.frame-divider{width:100%;height:40px;background:#E8E0D4;display:flex;align-items:center;padding:0 35px;}
+.frame-divider span{font-family:'Space Mono',monospace;font-size:10px;color:#A12D50;text-transform:uppercase;letter-spacing:0.2em;}
+</style>
+</head>
+<body style="background:#E8E0D4;padding:0;">
+
+<!-- ════════════════════════════
+     FRAME 1: HOME
+════════════════════════════ -->
+<div class="frame-divider"><span>01 — Home</span></div>
+<div class="frame" data-figma-layer="Home">
+
+  <!-- Announce -->
+  <div class="announce">
+    <span class="announce-text">Próxima feria <strong>·</strong> 5 jul · 18:00 h · Salones del Puerto →</span>
+  </div>
+
+  <!-- Nav -->
+  <div class="nav">
+    <div class="nav-logo">yeah<strong>!</strong> feria</div>
+    <div class="nav-burger"><span></span><span></span><span></span></div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Feria de diseño independiente</div>
+      <h1 class="hero-title">Donde el<br><em>diseño</em><br>se vive</h1>
+      <p class="hero-sub">Marcas independientes, diseñadores y creadores en un mismo espacio. Encontrá algo hecho con amor.</p>
+      <button class="btn btn-dark">Explorar la tienda →</button>
+    </div>
+    <div class="hero-dots">
+      <div class="hero-dot active"></div>
+      <div class="hero-dot"></div>
+      <div class="hero-dot"></div>
+    </div>
+  </div>
+
+  <!-- Marquee -->
+  <div class="marquee">
+    <div class="mq-text">Diseño independiente<span class="mq-dot">✦</span>Marcas locales<span class="mq-dot">✦</span>Comunidad creativa<span class="mq-dot">✦</span>Consumo consciente<span class="mq-dot">✦</span>Yeah! Feria<span class="mq-dot">✦</span>Diseño independiente<span class="mq-dot">✦</span>Marcas locales<span class="mq-dot">✦</span>Consumo consciente</div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat"><div class="stat-n">80+</div><div class="stat-l">Marcas en la feria</div></div>
+    <div class="stat"><div class="stat-n">12</div><div class="stat-l">Ediciones realizadas</div></div>
+    <div class="stat"><div class="stat-n">2000+</div><div class="stat-l">Visitantes por edición</div></div>
+  </div>
+
+  <!-- Cats -->
+  <div class="home-cats">
+    <span class="label label-sunset">Explorá por categoría</span>
+    <h2 class="sec-title sec-title-light">¿Qué estás buscando?</h2>
+    <p class="sec-sub sec-sub-light">Encontrá tu marca entre nuestras 15 categorías.</p>
+    <div class="cats-grid">
+      <div class="cat-chip">Accesorios y joyería</div>
+      <div class="cat-chip">Arte e ilustración</div>
+      <div class="cat-chip">Bebés e infancias</div>
+      <div class="cat-chip">Belleza y bienestar</div>
+      <div class="cat-chip">Calzado</div>
+      <div class="cat-chip">Cerámica</div>
+      <div class="cat-chip">Deco hogar</div>
+      <div class="cat-chip">Gastronomía artesanal</div>
+      <div class="cat-chip">Indumentaria</div>
+      <div class="cat-chip">Lencería</div>
+      <div class="cat-chip">Marroquinería</div>
+      <div class="cat-chip">Mascotas</div>
+      <div class="cat-chip">Plantas y jardinería</div>
+      <div class="cat-chip">Productos sustentables</div>
+      <div class="cat-chip">Textil y tejidos</div>
+    </div>
+  </div>
+
+  <!-- Featured -->
+  <div class="featured">
+    <span class="label label-mid">Selección de esta edición</span>
+    <h2 class="sec-title sec-title-dark">Marcas destacadas</h2>
+    <p class="sec-sub sec-sub-dark" style="margin-bottom:40px;">Una curaduría de las marcas que más amor están generando en nuestra comunidad.</p>
+    <div class="featured-grid">
+      <div class="bfc">
+        <div class="bfc-img"><div class="bfc-color" style="background:#C8A870;"></div><span class="bfc-badge badge-ship">Envío gratis</span></div>
+        <div class="bfc-body"><div class="bfc-cat">ceramica</div><div class="bfc-name">Luna verde</div><div class="bfc-desc">Macetas y objetos de cerámica hechos a mano. Formas orgánicas, colores naturales.</div><div class="bfc-links"><a class="bfc-link" href="#">Instagram →</a><a class="bfc-link" href="#">Tienda →</a></div></div>
+      </div>
+      <div class="bfc">
+        <div class="bfc-img"><div class="bfc-color" style="background:#C4785A;"></div><span class="bfc-badge badge-off">20% OFF</span></div>
+        <div class="bfc-body"><div class="bfc-cat">textil</div><div class="bfc-name">Hilos & co</div><div class="bfc-desc">Ropa tejida artesanalmente. Cada prenda lleva el tiempo que merece.</div><div class="bfc-links"><a class="bfc-link" href="#">Instagram →</a></div></div>
+      </div>
+      <div class="bfc">
+        <div class="bfc-img"><div class="bfc-color" style="background:#6A90B8;"></div></div>
+        <div class="bfc-body"><div class="bfc-cat">arte</div><div class="bfc-name">Papel vivo</div><div class="bfc-desc">Papelería de diseño, cuadernos, prints y objetos de escritorio.</div><div class="bfc-links"><a class="bfc-link" href="#">Instagram →</a><a class="bfc-link" href="#">Web →</a></div></div>
+      </div>
+      <div class="bfc">
+        <div class="bfc-img"><div class="bfc-color" style="background:#7A9860;"></div><span class="bfc-badge badge-off">15% OFF</span></div>
+        <div class="bfc-body"><div class="bfc-cat">indumentaria</div><div class="bfc-name">Raíz libre</div><div class="bfc-desc">Prendas de algodón orgánico y tintes naturales. Moda slow, sin apuros.</div><div class="bfc-links"><a class="bfc-link" href="#">Instagram →</a></div></div>
+      </div>
+    </div>
+    <div style="margin-top:40px;text-align:center;">
+      <button class="btn btn-ghost-inv">Ver todas las marcas →</button>
+    </div>
+  </div>
+
+  <!-- About -->
+  <div class="about-strip">
+    <div class="about-left">
+      <span class="label label-red">Nuestra historia</span>
+      <h2 class="about-title">Una feria<br>que te mueve</h2>
+      <p class="about-body">Yeah! Feria nació de la convicción de que el diseño independiente merece un espacio propio: donde las marcas hablan directamente con quienes las eligen. Cada edición es curada con amor.</p>
+      <span class="lnk">Conocé nuestra historia →</span>
+    </div>
+    <div class="about-right">
+      <span class="label label-sunset">Nuestros pilares</span>
+      <div class="pill"><div class="pill-label">Diseño independiente</div><p class="pill-text">Marcas que piensan, diseñan y producen con identidad propia.</p></div>
+      <div class="pill"><div class="pill-label">Comunidad creativa</div><p class="pill-text">Un espacio donde diseñadores y amantes del diseño se reconocen.</p></div>
+      <div class="pill"><div class="pill-label">Consumo consciente</div><p class="pill-text">Elegir bien, elegir local. Cada compra tiene una historia detrás.</p></div>
+    </div>
+  </div>
+
+  <!-- Eventos home -->
+  <div class="home-eventos">
+    <span class="label label-white">Agenda</span>
+    <h2 class="sec-title" style="color:#fff;margin-bottom:48px;">Vení a nuestros eventos</h2>
+    <div class="ev-item">
+      <div class="ev-date">28<small>Jul · 2025</small></div>
+      <div><div class="ev-name">Yeah! Feria — Edición Invierno</div><div class="ev-place">Centro Cultural Recoleta · Buenos Aires</div></div>
+      <span class="ev-tag prox">Próxima</span>
+    </div>
+    <div class="ev-item">
+      <div class="ev-date">15<small>Oct · 2025</small></div>
+      <div><div class="ev-name">Yeah! Feria — Edición Primavera</div><div class="ev-place">Parque Centenario · Buenos Aires</div></div>
+      <span class="ev-tag prox">Próxima</span>
+    </div>
+    <div class="ev-item">
+      <div class="ev-date">07<small>Dic · 2025</small></div>
+      <div><div class="ev-name">Yeah! Feria Navideña</div><div class="ev-place">Palermo Soho · Buenos Aires</div></div>
+      <span class="ev-tag prox">Próxima</span>
+    </div>
+    <div style="margin-top:40px;">
+      <button class="btn btn-ghost-light">Ver todas las fechas →</button>
+    </div>
+  </div>
+
+  <!-- Gallery CTA -->
+  <div class="gal-home">
+    <div class="gal-panel"><div class="gal-panel-bg" style="background-image:url('https://images.unsplash.com/photo-1504439468489-c8920d796a29?w=800&q=80');background-color:#2A1A0A;"></div></div>
+    <div class="gal-panel"><div class="gal-panel-bg" style="background-image:url('https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=800&q=80');background-color:#1A1A0A;"></div></div>
+    <div class="gal-panel"><div class="gal-panel-bg" style="background-image:url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80');background-color:#1A0808;"></div></div>
+    <div class="gal-panel"><div class="gal-panel-bg" style="background-image:url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80');background-color:#081808;"></div></div>
+    <div class="gal-cta-overlay">
+      <button class="btn btn-gal">Explorar fotos →</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-logo">yeah<strong>!</strong> feria</div>
+    <div class="footer-links"><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">Contacto</a></div>
+    <div class="footer-copy">© 2025 Yeah! Feria</div>
+  </div>
+
+</div><!-- /frame home -->
+
+<!-- ════════════════════════════
+     FRAME 2: MENU OVERLAY
+════════════════════════════ -->
+<div class="frame-divider"><span>02 — Menú overlay</span></div>
+<div class="frame" data-figma-layer="Menu Overlay">
+  <div class="announce"><span class="announce-text">Próxima feria <strong>·</strong> 5 jul · 18:00 h · Salones del Puerto →</span></div>
+  <div class="nav"><div class="nav-logo">yeah<strong>!</strong> feria</div>
+    <div class="nav-burger" style="gap:7px;">
+      <span style="transform:translateY(8.5px) rotate(45deg);width:28px;display:block;height:1.5px;background:#F9D498;"></span>
+      <span style="opacity:0;width:28px;display:block;height:1.5px;background:#F9D498;"></span>
+      <span style="transform:translateY(-8.5px) rotate(-45deg);width:28px;display:block;height:1.5px;background:#F9D498;"></span>
+    </div>
+  </div>
+  <div class="menu-overlay-frame">
+    <div class="menu-overlay-top">
+      <div style="opacity:0;font-size:18px;">yeah! feria</div>
+      <div class="menu-overlay-logo">yeah<strong>!</strong> feria</div>
+    </div>
+    <div class="menu-overlay-body">
+      <div class="menu-item"><span class="menu-num">01</span>Inicio</div>
+      <div class="menu-item hover"><span class="menu-num">02</span>Tienda</div>
+      <div class="menu-item"><span class="menu-num">03</span>Quiénes somos</div>
+      <div class="menu-item"><span class="menu-num">04</span>Galería</div>
+      <div class="menu-item"><span class="menu-num">05</span>Eventos</div>
+    </div>
+    <div class="menu-footer">
+      <a href="#">Instagram</a><a href="#">Facebook</a><a href="#">Contacto</a>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     FRAME 3: TIENDA
+════════════════════════════ -->
+<div class="frame-divider"><span>03 — Tienda</span></div>
+<div class="frame" data-figma-layer="Tienda">
+  <div class="announce"><span class="announce-text">Próxima feria <strong>·</strong> 5 jul · 18:00 h · Salones del Puerto →</span></div>
+  <div class="nav"><div class="nav-logo">yeah<strong>!</strong> feria</div><div class="nav-burger"><span></span><span></span><span style="width:18px;"></span></div></div>
+  <div class="tienda-header">
+    <span class="label label-sunset">Catálogo de marcas</span>
+    <h1 class="sec-title sec-title-light">La tienda</h1>
+    <p class="sec-sub" style="color:rgba(249,212,152,0.45);">Explorá las marcas por categoría. Cada enlace te lleva directo a sus redes.</p>
+  </div>
+  <div class="filter-bar">
+    <span class="fb-label">Filtrar</span>
+    <button class="fb-btn active">Todas</button>
+    <button class="fb-btn">Accesorios y joyería</button>
+    <button class="fb-btn">Arte e ilustración</button>
+    <button class="fb-btn">Bebés e infancias</button>
+    <button class="fb-btn">Belleza y bienestar</button>
+    <button class="fb-btn">Calzado</button>
+    <button class="fb-btn">Cerámica</button>
+    <button class="fb-btn">Deco hogar</button>
+    <button class="fb-btn">Gastronomía artesanal</button>
+    <button class="fb-btn">Indumentaria</button>
+    <button class="fb-btn">Lencería</button>
+    <button class="fb-btn">Marroquinería</button>
+    <button class="fb-btn">Mascotas</button>
+    <button class="fb-btn">Plantas y jardinería</button>
+    <button class="fb-btn">Productos sustentables</button>
+    <button class="fb-btn">Textil y tejidos</button>
+  </div>
+  <div class="brands-g">
+    <div class="bc"><div class="bc-img"><div class="bc-color" style="background:#C8A870;"></div><span class="bfc-badge badge-ship" style="position:absolute;top:10px;left:10px;">Envío gratis</span></div><div class="bc-body"><div class="bc-cat">ceramica</div><div class="bc-name">Luna verde</div><div class="bc-desc">Macetas y objetos de cerámica hechos a mano. Formas orgánicas, colores naturales.</div><div class="bc-links"><a class="bc-link" href="#">Instagram →</a><a class="bc-link" href="#">Tienda →</a></div></div></div>
+    <div class="bc"><div class="bc-img"><div class="bc-color" style="background:#C4785A;"></div><span class="bfc-badge badge-off" style="position:absolute;top:10px;left:10px;">20% OFF</span></div><div class="bc-body"><div class="bc-cat">textil</div><div class="bc-name">Hilos & co</div><div class="bc-desc">Ropa tejida artesanalmente. Cada prenda lleva el tiempo que merece.</div><div class="bc-links"><a class="bc-link" href="#">Instagram →</a></div></div></div>
+    <div class="bc"><div class="bc-img"><div class="bc-color" style="background:#6A90B8;"></div></div><div class="bc-body"><div class="bc-cat">arte</div><div class="bc-name">Papel vivo</div><div class="bc-desc">Papelería de diseño, cuadernos, prints y objetos de escritorio.</div><div class="bc-links"><a class="bc-link" href="#">Instagram →</a><a class="bc-link" href="#">Web →</a></div></div></div>
+    <div class="bc"><div class="bc-img"><div class="bc-color" style="background:#7A9860;"></div><span class="bfc-badge badge-off" style="position:absolute;top:10px;left:10px;">15% OFF</span></div><div class="bc-body"><div class="bc-cat">indumentaria</div><div class="bc-name">Raíz libre</div><div class="bc-desc">Prendas de algodón orgánico y tintes naturales. Moda slow, sin apuros.</div><div class="bc-links"><a class="bc-link" href="#">Instagram →</a></div></div></div>
+    <div class="bc"><div class="bc-img"><div class="bc-color" style="background:#7878B8;"></div></div><div class="bc-body"><div class="bc-cat">accesorios</div><div class="bc-name">Mar de fondo</div><div class="bc-desc">Joyería contemporánea en plata y bronce. Cada pieza, una sola vez.</div><div class="bc-links"><a class="bc-link" href="#">Instagram →</a><a class="bc-link" href="#">Tienda →</a></div></div></div>
+    <div class="bc"><div class="bc-img"><div class="bc-color" style="background:#88B870;"></div><span class="bfc-badge badge-ship" style="position:absolute;top:10px;left:10px;">Envío gratis</span></div><div class="bc-body"><div class="bc-cat">belleza</div><div class="bc-name">Flora dura</div><div class="bc-desc">Cosmética natural con plantas locales. Cremas, aceites y jabones artesanales.</div><div class="bc-links"><a class="bc-link" href="#">Instagram →</a></div></div></div>
+  </div>
+  <div class="footer"><div class="footer-logo">yeah<strong>!</strong> feria</div><div class="footer-links"><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">Contacto</a></div><div class="footer-copy">© 2025 Yeah! Feria</div></div>
+</div>
+
+<!-- ════════════════════════════
+     FRAME 4: QUIÉNES SOMOS
+════════════════════════════ -->
+<div class="frame-divider"><span>04 — Quiénes somos</span></div>
+<div class="frame" data-figma-layer="Quiénes Somos">
+  <div class="announce"><span class="announce-text">Próxima feria <strong>·</strong> 5 jul · 18:00 h · Salones del Puerto →</span></div>
+  <div class="nav"><div class="nav-logo">yeah<strong>!</strong> feria</div><div class="nav-burger"><span></span><span></span><span style="width:18px;"></span></div></div>
+  <div class="sobre-hero">
+    <span class="label label-red">Sobre nosotros</span>
+    <h1 class="sobre-title">Quiénes<br><em>somos</em></h1>
+    <p class="sobre-lead">Un proyecto de diseño independiente que cree en el poder de lo hecho con intención.</p>
+  </div>
+  <div class="sobre-body">
+    <div class="sobre-main">
+      <p>Yeah! Feria es mucho más que un mercado. Es un punto de encuentro entre marcas que crean con intención y personas que eligen con consciencia.</p>
+      <p>Desde nuestra primera edición, nos propusimos generar un espacio donde el diseño local tuviera visibilidad real: sin intermediarios, sin grandes marcas, sin ruido. Solo ideas, objetos y personas.</p>
+      <p>Cada edición es curada: nos importa la calidad, la originalidad y que cada marca tenga algo genuino para decir.</p>
+    </div>
+    <div class="sobre-side">
+      <span class="label label-sunset">Nuestros valores</span>
+      <div class="sv"><div class="sv-title">Diseño independiente</div><div class="sv-text">Apoyamos a quienes diseñan y producen por fuera del sistema de moda masiva.</div></div>
+      <div class="sv"><div class="sv-title">Comunidad creativa</div><div class="sv-text">Construimos lazos reales entre marcas, diseñadores y consumidores.</div></div>
+      <div class="sv"><div class="sv-title">Consumo consciente</div><div class="sv-text">Creemos que elegir bien es un acto político y un gesto de amor hacia lo local.</div></div>
+      <div class="sv"><div class="sv-title">Reseñas honestas</div><div class="sv-text">La voz de nuestra comunidad es parte de la curaduría.</div></div>
+    </div>
+  </div>
+  <div class="manifesto"><q>"Diseñar es decidir.<br>Elegir es crear."</q></div>
+  <div class="footer"><div class="footer-logo">yeah<strong>!</strong> feria</div><div class="footer-links"><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">Contacto</a></div><div class="footer-copy">© 2025 Yeah! Feria</div></div>
+</div>
+
+<!-- ════════════════════════════
+     FRAME 5: GALERÍA
+════════════════════════════ -->
+<div class="frame-divider"><span>05 — Galería</span></div>
+<div class="frame" data-figma-layer="Galería">
+  <div class="announce"><span class="announce-text">Próxima feria <strong>·</strong> 5 jul · 18:00 h · Salones del Puerto →</span></div>
+  <div class="nav"><div class="nav-logo">yeah<strong>!</strong> feria</div><div class="nav-burger"><span></span><span></span><span style="width:18px;"></span></div></div>
+  <div class="gal-header">
+    <span class="label label-sunset">Ediciones anteriores</span>
+    <h1 class="sec-title sec-title-light">Galería</h1>
+    <p class="sec-sub" style="color:rgba(249,212,152,0.45);margin-bottom:0;">Marcas que nos acompañaron, productos únicos y comunidad.</p>
+  </div>
+  <div class="gal-filters">
+    <span class="fb-label">Ver</span>
+    <button class="fb-btn active">Todas</button>
+    <button class="fb-btn">Marcas</button>
+    <button class="fb-btn">Productos únicos</button>
+    <button class="fb-btn">Comunidad</button>
+  </div>
+  <div class="gal-mosaic">
+    <div class="gal-item"><div class="gal-bg" style="background-image:url('https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=600&q=80');background-color:#2A1A0A;"></div><div class="gal-info"><div class="gal-cat">marcas</div><div class="gal-title-item">Stand Luna Verde</div></div></div>
+    <div class="gal-item"><div class="gal-bg" style="background-image:url('https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80');background-color:#1A0808;"></div><div class="gal-info"><div class="gal-cat">productos</div><div class="gal-title-item">Cerámica artesanal</div></div></div>
+    <div class="gal-item"><div class="gal-bg" style="background-image:url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80');background-color:#081A1A;"></div><div class="gal-info"><div class="gal-cat">comunidad</div><div class="gal-title-item">Visitantes edición otoño</div></div></div>
+    <div class="gal-item"><div class="gal-bg" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80');background-color:#1A0808;"></div><div class="gal-info"><div class="gal-cat">marcas</div><div class="gal-title-item">Hilos & Co showroom</div></div></div>
+    <div class="gal-item"><div class="gal-bg" style="background-image:url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&q=80');background-color:#08081A;"></div><div class="gal-info"><div class="gal-cat">productos</div><div class="gal-title-item">Joyería contemporánea</div></div></div>
+    <div class="gal-item"><div class="gal-bg" style="background-image:url('https://images.unsplash.com/photo-1504439468489-c8920d796a29?w=600&q=80');background-color:#1A180A;"></div><div class="gal-info"><div class="gal-cat">comunidad</div><div class="gal-title-item">Tarde de feria</div></div></div>
+  </div>
+  <div class="footer"><div class="footer-logo">yeah<strong>!</strong> feria</div><div class="footer-links"><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">Contacto</a></div><div class="footer-copy">© 2025 Yeah! Feria</div></div>
+</div>
+
+<!-- ════════════════════════════
+     FRAME 6: EVENTOS
+════════════════════════════ -->
+<div class="frame-divider"><span>06 — Eventos</span></div>
+<div class="frame" data-figma-layer="Eventos">
+  <div class="announce"><span class="announce-text">Próxima feria <strong>·</strong> 5 jul · 18:00 h · Salones del Puerto →</span></div>
+  <div class="nav"><div class="nav-logo">yeah<strong>!</strong> feria</div><div class="nav-burger"><span></span><span></span><span style="width:18px;"></span></div></div>
+  <div class="ev-header">
+    <span class="label label-red">Agenda</span>
+    <h1 class="ev-h1">Eventos<br>& <em>fechas</em></h1>
+  </div>
+  <div class="ev-rows">
+    <div class="ev-row"><div class="ev-row-date">28<small>Jul 2025</small></div><div><div class="ev-row-title">Yeah! Feria — Edición Invierno</div><div class="ev-row-place">Centro Cultural Recoleta · Buenos Aires · 11:00 a 20:00 hs</div></div><span class="ev-row-tag prox">Próxima</span></div>
+    <div class="ev-row"><div class="ev-row-date">15<small>Oct 2025</small></div><div><div class="ev-row-title">Yeah! Feria — Edición Primavera</div><div class="ev-row-place">Parque Centenario · Buenos Aires · 10:00 a 19:00 hs</div></div><span class="ev-row-tag prox">Próxima</span></div>
+    <div class="ev-row"><div class="ev-row-date">07<small>Dic 2025</small></div><div><div class="ev-row-title">Yeah! Feria Navideña</div><div class="ev-row-place">Palermo Soho · Buenos Aires · 12:00 a 21:00 hs</div></div><span class="ev-row-tag prox">Próxima</span></div>
+    <div class="ev-row"><div class="ev-row-date">22<small>Jun 2025</small></div><div><div class="ev-row-title">Yeah! Feria — Edición Otoño</div><div class="ev-row-place">Centro Metropolitano de Diseño · Barracas · 150+ marcas</div></div><span class="ev-row-tag pas">Pasada</span></div>
+    <div class="ev-row"><div class="ev-row-date">20<small>Abr 2025</small></div><div><div class="ev-row-title">Yeah! Pop-up — Belgrano</div><div class="ev-row-place">Showroom colectivo · Belgrano R · Edición especial otoño</div></div><span class="ev-row-tag pas">Pasada</span></div>
+  </div>
+  <div class="mapa-sec">
+    <span class="label label-sunset">Sede · próxima edición</span>
+    <h2>Cómo llegar</h2>
+    <div class="mapa-ph"><span style="font-size:28px;">📍</span><span>Centro Cultural Recoleta</span><span>Mapa interactivo — próximamente</span></div>
+  </div>
+  <div class="ev-cta">
+    <div><h3>¿Querés participar como feriante?</h3><p>Inscripciones abiertas para la próxima edición</p></div>
+    <button class="btn btn-ghost-light">Inscribirse →</button>
+  </div>
+  <div class="footer"><div class="footer-logo">yeah<strong>!</strong> feria</div><div class="footer-links"><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">Contacto</a></div><div class="footer-copy">© 2025 Yeah! Feria</div></div>
+</div>
+
+</body>
+</html>
